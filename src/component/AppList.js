@@ -31,7 +31,7 @@ class AppRow extends Component {
     let el = wrapper.firstChild;
     swal({
       content: el,
-      buttons: 'Install'
+      buttons: ['Back', 'Install']
     }).then(install => {
       if (install) {
         window.open(this.props.app.id.label, '_blank');
@@ -86,7 +86,7 @@ class AppList extends Component {
 
   render() {
     const rows = [];
-    const searchText = this.props.searchText;
+    const searchText = this.props.searchText.toLowerCase();
     let counter = 0;
     this.props.appList.forEach(app => {
       //filter out not match item

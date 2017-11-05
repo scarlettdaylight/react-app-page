@@ -1,6 +1,9 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+.input-field input[type='search'] {
+  font-size: 18px;
+}
 .input-field input[type='search'] + label {
   top: -10px;
 }
@@ -121,6 +124,6 @@ body {
   color: #949494;
   padding: 0 10px;
 }
-.swal-button {
+.swal-button--confirm {
   background: #009688 !important;
 }

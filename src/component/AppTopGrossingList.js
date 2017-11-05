@@ -30,7 +30,7 @@ class AppItem extends Component {
     let el = wrapper.firstChild;
     swal({
       content: el,
-      buttons: 'Install'
+      buttons: ['Back', 'Install']
     }).then(install => {
       if (install) {
         window.open(this.props.app.id.label, '_blank');
@@ -117,7 +117,7 @@ class AppTopGrossingList extends Component {
 
   render() {
     const items = [];
-    const searchText = this.props.searchText;
+    const searchText = this.props.searchText.toLowerCase();
     this.props.grossingList.forEach(app => {
       //filter out not match item
       const name = app['im:name'].label.toLowerCase();

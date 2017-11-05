@@ -3,6 +3,9 @@ body {
 }
 
 //search bar
+.input-field input[type=search] {
+	font-size: 18px;
+}
 .input-field input[type=search] + label {
 	top: -10px;
 }
@@ -149,6 +152,6 @@ body {
 		padding: 0 10px;
 	}
 }
-.swal-button {
+.swal-button--confirm {
 	background: #009688 !important;
 }
