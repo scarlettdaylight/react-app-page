@@ -1,10 +1,109 @@
+body {
+	font-family: "Roboto", sans-serif;
+}
+
+//search bar
 .input-field input[type=search] + label {
 	top: -10px;
 }
+
+//swiper
 .swiper-container {
-	margin-top: 30px;
+	padding-bottom: 10px;
 }
+
+.swiper-pagination-bullet-active {
+	background: #009688 !important;
+}
+
+.swiper-button-next, .swiper-button-prev {
+	background-image: none;
+	width: 56px;
+	height: 56px;
+	top: 90%;
+	z-index: 100;
+}
+
+.swiper-slide .card-panel {
+	margin: .5rem .5rem 1rem .5rem;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets {
+	bottom: 0;
+}
+
+//app common
+.app-name {
+	font-size: 18px;
+	padding-top: 1rem;
+	display: block;
+}
+
+.app-type {
+	display: block;
+	padding-top: 5px;
+	font-size: 14px;
+	color: #949494;
+}
+
+.app-image-wrapper {
+	max-width: 100px;
+	line-height: 0;
+}
+
+.responsive-img.normal {
+	border-radius: 5px;
+}
+
+//app grossing
+.app-grossing-title {
+	margin-top: 2rem;
+	font-weight: 200;
+}
+
+.card-panel {
+	height: 150px;
+}
+
+.card-app-img {
+	width: 20%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.card-app-detail {
+	width: 80%;
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 1rem;
+
+}
+
+//app listing
 .preloader-wrapper {
 	display: block;
 	margin: auto;
+}
+
+.collection-item {
+	min-height: 85px;
+	padding: 15px 20px;
+	.row {
+		margin: 0;
+	}
+	img {
+		width: 100%;
+		max-width: 75px;
+	}
+	.app-number {
+		font-size: 20px;
+		color: #949494;
+		text-align: center;
+		padding-top: 2rem;
+	}
+	&:hover {
+		background: #fafafa;
+		cursor: pointer;
+	}
+
 }

@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+    this.handleClearSearch = this.handleClearSearch.bind(this);
+  }
+
+  handleClearSearch(e) {
+    this.props.onSearchTextChange('');
   }
 
   handleSearchTextChange(e) {
-    console.log(e);
     this.props.onSearchTextChange(e.target.value);
   }
 
@@ -28,7 +31,9 @@ class SearchBar extends Component {
                 <label className="label-icon" htmlFor="search">
                   <i className="material-icons">search</i>
                 </label>
-                <i className="material-icons">close</i>
+                <i className="material-icons" onClick={this.handleClearSearch}>
+                  close
+                </i>
               </div>
             </form>
           </div>

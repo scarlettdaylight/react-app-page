@@ -14,26 +14,44 @@ function LazyLoadHolder() {
 }
 
 class AppRow extends Component {
+  static isEven(n) {
+    return n % 2 === 0;
+  }
+
   render() {
     const app = this.props.app;
     //get the necessary info
-    const appicon = app['im:image']['0'].label;
-    const appname = app['im:name'].label;
-    const apptype = app.category.attributes.label;
+    const app_icon = app['im:image']['1'].label;
+    const app_name = app['im:name'].label;
+    const app_type = app.category.attributes.label;
+    const app_num = this.props.app_num;
     return (
       <LazyLoad
         once
         height={50}
         offset={[-50, 0]}
+        debounce={500}
         placeholder={<LazyLoadHolder />}
       >
-        <li className="collection-item avatar">
-          <img src={appicon} alt={appname} className="circle" />
-          <span className="title">{appname}</span>
-          <p>{apptype}</p>
-          <a href="" className="secondary-content">
-            <i className="material-icons">grade</i>
-          </a>
+        <li className="collection-item ">
+          <div className="row">
+            <div className="col s1 app-number">{app_num}</div>
+            <div className="col s3 m2 app-image-wrapper">
+              <img
+                src={app_icon}
+                alt={app_name}
+                className={
+                  AppRow.isEven(app_num)
+                    ? 'responsive-img circle'
+                    : 'responsive-img normal'
+                }
+              />
+            </div>
+            <div className="col s8 m8">
+              <span className="app-name">{app_name}</span>
+              <span className="app-type">{app_type}</span>
+            </div>
+          </div>
         </li>
       </LazyLoad>
     );
@@ -42,20 +60,32 @@ class AppRow extends Component {
 
 class AppList extends Component {
   componentDidUpdate() {
-    console.log('hihihihhi');
     forceCheck();
   }
 
   render() {
     const rows = [];
     const searchText = this.props.searchText;
+    let counter = 0;
     this.props.appList.forEach(app => {
       //filter out not match item
       const name = app['im:name'].label.toLowerCase();
-      if (name.indexOf(searchText) === -1) {
+      const type = app['im:contentType'].attributes.term.toLowerCase();
+      const author = app['im:artist'].label.toLowerCase();
+      const summary = app.summary.label.toLowerCase();
+
+      if (
+        name.indexOf(searchText) === -1 &&
+        type.indexOf(searchText) === -1 &&
+        author.indexOf(searchText) === -1 &&
+        summary.indexOf(searchText) === -1
+      ) {
         return;
       }
-      rows.push(<AppRow app={app} key={app.id.attributes['im:id']} />);
+      counter++;
+      rows.push(
+        <AppRow app={app} key={app.id.attributes['im:id']} app_num={counter} />
+      );
     });
     //return the face of app list
     return (
