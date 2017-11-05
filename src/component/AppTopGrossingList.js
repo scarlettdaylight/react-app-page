@@ -12,6 +12,16 @@ import {
 
 Swiper.use([Pagination, Navigation, Autoplay]);
 
+class EmptyItem extends Component {
+  render() {
+    return (
+      <div className="swiper-slide">
+        <div className="no-item">{this.props.words}</div>
+      </div>
+    );
+  }
+}
+
 //top grossing list is using swiper to enable horizontal scroll and swipe
 class AppItem extends Component {
   constructor(props) {
@@ -112,9 +122,30 @@ class AppTopGrossingList extends Component {
 
   render() {
     const items = [];
+    const searchText = this.props.searchText;
     this.props.grossingList.forEach(app => {
+      //filter out not match item
+      const name = app['im:name'].label.toLowerCase();
+      const type = app['im:contentType'].attributes.term.toLowerCase();
+      const author = app['im:artist'].label.toLowerCase();
+      const summary = app.summary.label.toLowerCase();
+
+      if (
+        name.indexOf(searchText) === -1 &&
+        type.indexOf(searchText) === -1 &&
+        author.indexOf(searchText) === -1 &&
+        summary.indexOf(searchText) === -1
+      ) {
+        return;
+      }
       items.push(<AppItem app={app} key={app.id.attributes['im:id']} />);
     });
+
+    if (items.length === 0) {
+      items.push(<EmptyItem key={1} words={'ops!'} />);
+      items.push(<EmptyItem key={2} words={'Nothing to show.'} />);
+    }
+
     //swiper structure here
     return (
       <div className="row">
@@ -123,7 +154,9 @@ class AppTopGrossingList extends Component {
         </div>
         <div className="col s12">
           <div className="swiper-container">
-            <div className="swiper-wrapper">{items}</div>
+            <div className="swiper-wrapper">
+              {items.length === 0 ? 'Nothing' : items}
+            </div>
             <div className="swiper-button-prev">
               <i className="material-icons medium">chevron_left</i>
             </div>

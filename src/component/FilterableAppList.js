@@ -62,7 +62,10 @@ class FilterableAppList extends Component {
           searchText={this.state.searchText}
         />
         <div className="container">
-          <AppTopGrossingList grossingList={this.state.grossingList} />
+          <AppTopGrossingList
+            grossingList={this.state.grossingList}
+            searchText={this.state.searchText}
+          />
           <AppList
             appList={this.state.appList}
             searchText={this.state.searchText}
