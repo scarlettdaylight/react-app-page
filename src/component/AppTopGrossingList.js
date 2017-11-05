@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import 'swiper/dist/css/swiper.min.css';
 import { Swiper, Pagination, Navigation } from 'swiper/dist/js/swiper.esm';
+
 Swiper.use([Pagination]);
 Swiper.use([Navigation]);
 
@@ -39,64 +40,53 @@ class AppTopGrossingList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appList: []
+      swiper: null
     };
   }
 
   componentDidMount() {
-    fetch(
-      'https://itunes.apple.com/hk/rss/topgrossingapplications/limit=10/json'
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        console.log('parsed json', json);
-        this.setState({ appList: json.feed.entry });
-      })
-      .then(() => {
-        //init swiper
-        const myswiper = new Swiper('.swiper-container', {
-          // Optional parameters
-          direction: 'horizontal',
-          mousewheel: true,
-          slidesPerView: 4,
-          // Navigation arrows
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-          },
-          pagination: {
-            el: '.swiper-pagination'
-          },
-          breakpoints: {
-            // when window width is <= 320px
-            480: {
-              slidesPerView: 1,
-              spaceBetween: 10
-            },
-            992: {
-              slidesPerView: 2,
-              spaceBetween: 10
-            }
-          },
-          on: {
-            init: function() {
-              console.log('hihihi');
-              console.log(this);
-            }
-          }
-        });
-        console.log(myswiper);
-      })
-      .catch(function(ex) {
-        console.log('parsing failed', ex);
-      });
+    let s = new Swiper('.swiper-container', {
+      // Optional parameters
+      direction: 'horizontal',
+      mousewheel: true,
+      slidesPerView: 4,
+      // Navigation arrows
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      pagination: {
+        el: '.swiper-pagination'
+      },
+      breakpoints: {
+        // when window width is <= 320px
+        480: {
+          slidesPerView: 1,
+          spaceBetween: 10
+        },
+        992: {
+          slidesPerView: 2,
+          spaceBetween: 10
+        }
+      },
+      on: {
+        init: function() {
+          console.log('hihihi');
+          console.log(this);
+        }
+      }
+    });
+    this.setState({ swiper: s });
+  }
+
+  componentDidUpdate() {
+    this.state.swiper.update();
   }
 
   render() {
     const items = [];
-    this.state.appList.forEach(app => {
+    console.log(this.props.grossingList);
+    this.props.grossingList.forEach(app => {
       items.push(<AppItem app={app} key={app.id.attributes['im:id']} />);
     });
     //swiper structure here
