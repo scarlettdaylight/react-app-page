@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
 
-class SearchInput extends Component {
-  render() {
-    return (
-      <form>
-        <div className="input-field">
-          <input id="search" type="search" required />
-          <label className="label-icon" htmlFor="search">
-            <i className="material-icons">search</i>
-          </label>
-          <i className="material-icons">close</i>
-        </div>
-      </form>
-    );
-  }
-}
-
 class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    console.log(this.props);
+    this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+  }
+
+  handleSearchTextChange(e) {
+    console.log(e);
+    this.props.onSearchTextChange(e.target.value);
+  }
+
   render() {
     return (
       <div className="navbar-fixed">
         <nav>
           <div className="teal nav-wrapper white-text">
-            <SearchInput />
+            <form>
+              <div className="input-field">
+                <input
+                  id="search"
+                  type="search"
+                  onChange={this.handleSearchTextChange}
+                  value={this.props.searchText}
+                />
+                <label className="label-icon" htmlFor="search">
+                  <i className="material-icons">search</i>
+                </label>
+                <i className="material-icons">close</i>
+              </div>
+            </form>
           </div>
         </nav>
       </div>

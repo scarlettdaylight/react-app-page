@@ -13,6 +13,13 @@ class FilterableAppList extends Component {
       grossingList: [],
       appList: []
     };
+    this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+  }
+
+  handleSearchTextChange(searchText) {
+    this.setState({
+      searchText: searchText
+    });
   }
 
   //get data before mounting
@@ -50,10 +57,16 @@ class FilterableAppList extends Component {
   render() {
     return (
       <div className="wrapper">
-        <SearchBar />
+        <SearchBar
+          onSearchTextChange={this.handleSearchTextChange}
+          searchText={this.state.searchText}
+        />
         <div className="container">
           <AppTopGrossingList grossingList={this.state.grossingList} />
-          <AppList appList={this.state.appList} />
+          <AppList
+            appList={this.state.appList}
+            searchText={this.state.searchText}
+          />
         </div>
       </div>
     );

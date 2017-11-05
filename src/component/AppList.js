@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LazyLoad from 'react-lazyload';
+import { forceCheck } from 'react-lazyload';
 import preloader from '../images/preloader.gif';
 
 function LazyLoadHolder() {
@@ -30,7 +31,7 @@ class AppRow extends Component {
           <img src={appicon} alt={appname} className="circle" />
           <span className="title">{appname}</span>
           <p>{apptype}</p>
-          <a href="#" className="secondary-content">
+          <a href="" className="secondary-content">
             <i className="material-icons">grade</i>
           </a>
         </li>
@@ -40,9 +41,20 @@ class AppRow extends Component {
 }
 
 class AppList extends Component {
+  componentDidUpdate() {
+    console.log('hihihihhi');
+    forceCheck();
+  }
+
   render() {
     const rows = [];
+    const searchText = this.props.searchText;
     this.props.appList.forEach(app => {
+      //filter out not match item
+      const name = app['im:name'].label.toLowerCase();
+      if (name.indexOf(searchText) === -1) {
+        return;
+      }
       rows.push(<AppRow app={app} key={app.id.attributes['im:id']} />);
     });
     //return the face of app list
