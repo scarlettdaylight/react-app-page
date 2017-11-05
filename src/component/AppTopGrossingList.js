@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import swal from 'sweetalert';
 import 'whatwg-fetch';
+import ModelContent from './ModelContent';
 import {
   Swiper,
   Pagination,
@@ -11,6 +14,25 @@ Swiper.use([Pagination, Navigation, Autoplay]);
 
 //top grossing list is using swiper to enable horizontal scroll and swipe
 class AppItem extends Component {
+  constructor(props) {
+    super(props);
+    this.openAppModal = this.openAppModal.bind(this);
+  }
+
+  openAppModal() {
+    let wrapper = document.createElement('div');
+    ReactDOM.render(<ModelContent app={this.props.app} />, wrapper);
+    let el = wrapper.firstChild;
+    swal({
+      content: el,
+      buttons: 'Install'
+    }).then(install => {
+      if (install) {
+        window.open(this.props.app.id.label, '_blank');
+      }
+    });
+  }
+
   render() {
     const app = this.props.app;
     //get the necessary info
@@ -21,7 +43,7 @@ class AppItem extends Component {
       <div className="swiper-slide app-item">
         <div className="row">
           <div className="col s12 ">
-            <div className="card-panel hoverable">
+            <div className="card-panel hoverable" onClick={this.openAppModal}>
               <div className="valign-wrapper">
                 <div className="card-app-img">
                   <img
@@ -79,12 +101,6 @@ class AppTopGrossingList extends Component {
         992: {
           slidesPerView: 2
         }
-      },
-      on: {
-        init: function() {
-          console.log('hihihi');
-          console.log(this);
-        }
       }
     });
     this.setState({ swiper: s });
@@ -96,7 +112,6 @@ class AppTopGrossingList extends Component {
 
   render() {
     const items = [];
-    console.log(this.props.grossingList);
     this.props.grossingList.forEach(app => {
       items.push(<AppItem app={app} key={app.id.attributes['im:id']} />);
     });

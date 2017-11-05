@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import LazyLoad from 'react-lazyload';
-import { forceCheck } from 'react-lazyload';
+import ReactDOM from 'react-dom';
+import LazyLoad, { forceCheck } from 'react-lazyload';
 import preloader from '../images/preloader.gif';
+import swal from 'sweetalert';
+import ModelContent from './ModelContent';
 
 function LazyLoadHolder() {
   return (
@@ -14,8 +16,27 @@ function LazyLoadHolder() {
 }
 
 class AppRow extends Component {
+  constructor(props) {
+    super(props);
+    this.openAppModal = this.openAppModal.bind(this);
+  }
+
   static isEven(n) {
     return n % 2 === 0;
+  }
+
+  openAppModal() {
+    let wrapper = document.createElement('div');
+    ReactDOM.render(<ModelContent app={this.props.app} />, wrapper);
+    let el = wrapper.firstChild;
+    swal({
+      content: el,
+      buttons: 'Install'
+    }).then(install => {
+      if (install) {
+        window.open(this.props.app.id.label, '_blank');
+      }
+    });
   }
 
   render() {
@@ -33,7 +54,7 @@ class AppRow extends Component {
         debounce={500}
         placeholder={<LazyLoadHolder />}
       >
-        <li className="collection-item ">
+        <li className="collection-item" onClick={this.openAppModal}>
           <div className="row">
             <div className="col s1 app-number">{app_num}</div>
             <div className="col s3 m2 app-image-wrapper">

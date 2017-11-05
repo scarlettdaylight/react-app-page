@@ -32,7 +32,7 @@ body {
 .app-type {
   display: block;
   padding-top: 5px;
-  font-size: 14px;
+  font-size: 1rem;
   color: #949494;
 }
 .app-image-wrapper {
@@ -47,6 +47,7 @@ body {
   font-weight: 200;
 }
 .card-panel {
+  cursor: pointer;
   height: 150px;
 }
 .card-app-img {
@@ -84,4 +85,24 @@ body {
 .collection-item:hover {
   background: #fafafa;
   cursor: pointer;
+}
+.modal-wrapper .app-image-wrapper {
+  display: inline-block;
+}
+.modal-wrapper .app-image-wrapper img {
+  border-radius: 5px;
+  max-width: 75px;
+}
+.modal-wrapper .app-name {
+  font-weight: 300;
+}
+.modal-wrapper .app-summary {
+  font-size: 1rem;
+  max-height: 300px;
+  overflow: scroll;
+  color: #949494;
+  padding: 0 10px;
+}
+.swal-button {
+  background: #009688 !important;
 }
