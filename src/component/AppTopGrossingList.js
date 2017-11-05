@@ -3,12 +3,7 @@ import ReactDOM from 'react-dom';
 import swal from 'sweetalert';
 import 'whatwg-fetch';
 import ModelContent from './ModelContent';
-import {
-  Swiper,
-  Pagination,
-  Navigation,
-  Autoplay
-} from 'swiper/dist/js/swiper.esm';
+import { Swiper, Pagination, Navigation, Autoplay } from '../js/swiper.esm';
 
 Swiper.use([Pagination, Navigation, Autoplay]);
 
