@@ -49,7 +49,7 @@ import {
   transition,
   transitionEnd,
   trigger
-} from 'dom7/dist/dom7.modular';
+} from './dom7.modular';
 
 let w;
 if (typeof window === 'undefined') {
